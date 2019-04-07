@@ -1,0 +1,45 @@
+#!/bin/bash
+
+if which jq >/dev/null; then
+    echo "Found jq."
+elif [[ -x jq ]]; then
+    echo "Can execute jq."
+else
+    printf 'jq program was not found in path or current directory.\nDownloading jq for this session...\n'
+    `curl http://github.com/stedolan/jq/releases/download/jq-1.5/jq-osx-amd64 -k -L -o jq`
+    `chmod +x jq`
+fi
+
+declare -a AR=(`go tool dist list -json | ./jq -r '[(. | unique | .[] | [.GOOS, .GOARCH ])] | sort | .[] | (.[0]) + "_"
++ ( .[1])'`)
+
+declare -a VERSION=0.1.0
+
+printf "Creating folders on S3 bucket:\n"
+printf "\n==============================="
+for ((idx=0; idx<${#AR[@]}; ++idx)); do
+    prefix=""
+    file=".nvdist"
+
+    IFS="_ " read -r -a array <<< "${prefix}_${AR[idx]}"
+    temp="${array[0]}_${array[1]}"
+
+    ARR1="${array[1]}"
+    ARR2="${array[2]}"
+
+    if [[ "$ARR1" == 'android' ]] || [[ "$ARR2" == 'arm' ]]; then
+        printf "\nSkipped build for '$ARR1/$ARR2'."
+    else
+        printf "\nBuilding '$ARR1/$ARR2'..."
+        `GOOS="${array[1]}" GOARCH="${array[2]}" go build -o build/structer_"${VERSION}"_"${AR[idx]}" app/main.go`
+        printf "\OK"
+    fi
+
+    printf "\n==============================="
+
+    # aws s3api put-object --profile fdigolan --bucket structer --key "${prefix}/${AR[idx]}/${file}"
+done
+
+`rm jq`
+printf '\nDone.\n'
+
