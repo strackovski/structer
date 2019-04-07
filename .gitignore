@@ -1,5 +1,9 @@
 ### Generated
 generated/*.go
+bin
+
+### Build Dependencies
+jq
 
 ### Go template
 # Binaries for programs and plugins

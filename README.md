@@ -23,7 +23,7 @@
 
 
 <p align="center">
-	<img src="https://s3.eu-central-1.amazonaws.com/terrarium-pro/terrarium-logo-tmp.png" width="220">
+	<img src="https://s3.eu-central-1.amazonaws.com/terrarium-pro/terrarium-logo-tmp.png" width="230">
 </p>
 
 # Overview
@@ -44,17 +44,72 @@
 
 ## Quick Start
 
-An installer script is available at our .... Once ready, run
+Install structer using the installation script by executing the following command (execute in directory with write permissions):
 
 ```bash
-./structer-install.sh
+curl https://s3.eu-central-1.amazonaws.com/structer/dist/structer_installer.sh | bash
 ```
- 
-When installed, run structer's `make` command from terminal, providing the path to json file in the `--file` parameter:
+
+The installer script is available for download [here](https://s3.eu-central-1.amazonaws.com/structer/dist/structer_installer.sh). 
+
+When installed, run the `structer` command from terminal:
+
+```bash
+structer
+```
+
+You should see the following output:
+
+```bash
+Structer is a tool for creating struct types from definitions stored as JSON.
+
+Usage:
+  structer [command]
+
+Available Commands:
+  help        Help about any command
+  make        Makes a struct from JSON data.
+
+Flags:
+      --config string   config file (default is $HOME/.structer.yaml)
+  -h, --help            help for structer
+  -t, --toggle          Help message for toggle
+
+Use "structer [command] --help" for more information about a command.
+```
+
+To get familiar with the main command, `make`, use the help option 
+
+```bash
+structer help make
+```
+
+```bash
+Makes a struct from JSON data.
+
+Usage:
+  structer make [flags]
+
+Flags:
+      --format string   the format of the input (default "json")
+  -h, --help            help for make
+      --in string       path to input file or directory
+      --out string      path to output directory (default "generated")
+
+Global Flags:
+      --config string   config file (default is $HOME/.structer.yaml)
+```
+
+
+Use `structer make` providing the path to json file in the `--in` parameter:
  
 ```bash
 structer make --in <PATH_TO_JSON_FILE>
 ```
+
+> :bulb: **TIP**
+> 
+> For more examples visit the [Examples](examples) directory.
 
 ## Download Binaries
 
@@ -69,14 +124,17 @@ structer make --in <PATH_TO_JSON_FILE>
 
 | File name                    | Kind    | OS      | Arch   | Size | Checksum                                                         |
 |------------------------------|---------|---------|--------|------|------------------------------------------------------------------|
-| [structer-installer.sh]()    | Installer  | -       | -      | 1MB | [View]() |
-| [structer_0.1.0_src.tar.gz]()    | Source  | -       | -      | 6MB | [View]() |
-| [structer_0.1.0_darwin_amd64.tar.gz]() | Archive | OSX     | x86-64 | 4.7MB| [View]() |
-| [structer_0.1.0_linux_386.tar.gz]()    | Archive | Linux   | x86    | 4.7MB | [View]() 
-| [structer_0.1.0_linux_amd64.tar.gz]()  | Archive | Linux   | x86-64 | 4.7MB | [View]() |
-| [structer_0.1.0_windows_386.zip]()     | Archive | Windows | x86    | 4.7MB | [View]() |
-| [structer_0.1.0_windows_amd64.zip]()   | Archive | Windows | x86-64 | 4.7MB | [View]() |
+| [structer-installer.sh](https://s3.eu-central-1.amazonaws.com/structer/dist/structer_installer.sh)    | Installer  | -       | -      | 3.4KB | [View](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_darwin_386.checksum) |
+| [structer_0.1.0_darwin_386](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_darwin_386) | Archive | OSX     | x86 | 10.9MB | [View](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_darwin_386.checksum) |
+| [structer_0.1.0_darwin_amd64](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_darwin_amd64) | Archive | OSX     | x86-64 | 12.3MB| [View](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_darwin_amd64.checksum) |
+| [structer_0.1.0_linux_386](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_linux_386)    | Archive | Linux   | x86    | 10.9MB | [View](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_linux_386.checksum) 
+| [structer_0.1.0_linux_amd64](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_linux_amd64)  | Archive | Linux   | x86-64 | 12.9MB | [View](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_linux_amd64.checksum) |
+| [structer_0.1.0_freebsd_386](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_freebsd_386)   | Archive | freebsd | x86    | 10.9MB | [View](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_freebsd_386.checksum) |
+| [structer_0.1.0_freebsd_amd64](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_freebsd_amd64)  | Archive | freebsd | x86-64    | 12.3MB | [View](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_freebsd_amd64.checksum) |
+| [structer_0.1.0_windows_386](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_windows_386)   | Archive | Windows | x86    | 10.9MB | [View](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_windows_386.checksum) |
+| [structer_0.1.0_windows_amd64](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_windows_amd64)  | Archive | Windows | x86-64 | 12.4MB | [View](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/structer_0.1.0_windows_amd64.checksum) |
 
+Builds for other platforms available [here](https://s3.eu-central-1.amazonaws.com/structer/0.1.0/).
 
 > :truck: **Release 0.1.0**
 > 
@@ -87,13 +145,41 @@ structer make --in <PATH_TO_JSON_FILE>
 Either download the source package or clone this repository, cd into the directory where you have the source files, and execute:
 
 ```bash
-make
+make && make install
 ```
+
+This will build and install the structer executable to your path.
 
 That's it. Now you can run:
 
 ```bash
 structer
+```
+
+Makefile offers the following options:
+
+```bash
+# Start the build process, cross-building all supported platforms:
+make
+
+# Start the build process for the current platform:
+make current
+
+# Start the build process for a specific platform:
+make platform darwin_amd64
+
+# The publish option is reserved for project maintainers. 
+# It will publish the distributable files to the build server 
+# after a successful build.
+make publish
+
+# Make install assumes there's a build file waiting in the build 
+# directory, and tries to move it to system path:
+make install
+
+# Downloads and installs the prebuilt binary for the current platform:
+make web_install
+
 ```
 
 
