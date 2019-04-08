@@ -4,28 +4,32 @@
 // license. See LICENSE file or go to https://www.apache.org/licenses/LICENSE-2.0
 // for full license details.
 
-package structer
+package cmd
 
 import "testing"
 
-func TestFile(t *testing.T) {
-	type args struct {
-		input      []byte
-		outputName string
-		outputPath string
-	}
+func TestExecute(t *testing.T) {
 	tests := []struct {
-		name    string
-		args    args
-		wantErr bool
+		name string
 	}{
 		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := File(tt.args.input, tt.args.outputName, tt.args.outputPath); (err != nil) != tt.wantErr {
-				t.Errorf("File() error = %v, wantErr %v", err, tt.wantErr)
-			}
+			Execute()
+		})
+	}
+}
+
+func Test_initConfig(t *testing.T) {
+	tests := []struct {
+		name string
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			initConfig()
 		})
 	}
 }
