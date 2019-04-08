@@ -214,19 +214,11 @@ Contribution guidelines are described in the [Contributing document](#).
 
 # Issues and Roadmap
 
-Issue tracker top 5 by priority:
+Issue tracker top:
 
-> :exclamation: **[STRU-329](#)**  Some bug request makes sense
+> :zap: **[STR-2](https://github.com/strackovski/structer/issues/1)** Enable (extendable) multiple input formats
 
-> :zap: **[STRU-330](#)** For more information about structer release
-
-> :fire: **[STRU-293](#)** Some bug report confirmed
-
-> :question: **[STRU-230](#)** Some feature request makes sense
- 
-> :grey_question: **[STRU-101](#)** Some feature request makes sense
-
-> :bulb: **[STRU-109](#)** Some feature request makes sense
+> :bulb: **[STRU-3](https://github.com/strackovski/structer/issues/3)** TBD
 
 
 # Contact
@@ -235,7 +227,7 @@ Feel free to get in touch if you have a question or request in connection to thi
 
 **Open, public communication is the prefered choice:**
 
-- Open an [issue](issues), or ask a [question on wiki](wiki) 
+- Open an [issue](https://github.com/strackovski/structer/issues), or ask a [question on wiki](https://github.com/strackovski/structer/wiki) 
 - There's a mailing list and a Google Group at [structer.groups.nv3.eu](https://structer.groups.nv3.eu)
 
 Private inquiries over email. Find emails in:

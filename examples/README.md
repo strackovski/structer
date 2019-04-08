@@ -110,51 +110,54 @@ drwxr-xr-x  22 ubuntu  ubuntu 704 Apr  7 16:47 ..
 
 ## 4. Specifying file format explicitly
 
-Any format which can be encoded to json can be provided as the `--format` parameter, if a suitable encoder exists:
+Any format which can be decoded to json can be provided as the `--format` parameter, if a suitable decoder exists:
 
 ```bash
 structer make --in ~/models --format yaml
 ```
 
-A structer encoder is a simple interface:
+A structer decoder is a simple interface:
 
 ```go
-type ToJson func(input, output string) (string, error)
-
-type ToJsonEncoder interface {
-  ToJson
+type ToJsonDecoder interface {
+    Decode(input string) ([]byte, error)
 }
 ```
 
-YAML and XML encoders are built-in by default. To implement additional encoders, take a look at the available encoders below for reference.
+YAML is the only built-in decoder by default. To implement additional decoders, take a look at the available one 
+below for reference.
 
 **A concrete implementation for YAML** (file `pkg/structer/yaml.go`):
 
 ```go
 package structer
 
-type YamlToJsonEncoder struct {
-  ToJson
+import (
+    "encoding/json"
+
+    "gopkg.in/yaml.v2"
+)
+
+type YamlToJsonDecoder struct {
 }
 
-func (e YamlToJsonEncoder) YamlToJson(input, output string) (string, error) {
-  // convert yaml to json
-  // return json string
+func (e YamlToJsonDecoder ) Decode(input string) ([]byte, error) {
+    var body interface{}
+    if err := yaml.Unmarshal([]byte(input), &body); err != nil {
+        panic(err)
+    }
+
+    body = e.convert(body)
+
+    if b, err := json.Marshal(body); err != nil {
+        panic(err)
+    } else {
+        return b, nil
+    }
 }
-```
 
-**Another implementation, this time for XML** (file `pkg/structer/xml.go`):
-
-```go
-package structer
-
-type XmlToJsonEncoder struct {
-  ToJson
-}
-
-func (e XmlToJsonEncoder) XmlToJson(input, output string) (string, error) {
-  // convert xml to json
-  // return json string
+func (e YamlToJsonDecoder) convert(i interface{}) interface{} {
+    // decoder internal
 }
 ```
 

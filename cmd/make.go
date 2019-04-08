@@ -44,7 +44,7 @@ var makeCmd = &cobra.Command{
         }
 
         var fileName string
-        var contents string
+        var contents []byte
 
         fi, err := os.Stat(in)
         structer.Check(err)
@@ -56,24 +56,22 @@ var makeCmd = &cobra.Command{
             structer.Check(err)
 
             for _, f := range files {
-                fmt.Println(f.Name())
                 fileName, contents, err = readFile(in + "/" + f.Name())
-                makeFile(string(contents), fileName, "generated")
+                makeFile(contents, fileName, "generated")
             }
-
         case mode.IsRegular():
+            fmt.Println(in)
             fileName, contents, err = readFile(in)
             structer.Check(err)
-
-            makeFile(string(contents), fileName, "generated")
+            makeFile(contents, fileName, "generated")
         }
     },
 }
 
 // makeFile writes contents to a file.
-func makeFile(contents, fileName, packageName string) {
+func makeFile(contents []byte, fileName, packageName string) {
     structName := strings.Title(strings.Split(fileName, ".")[0])
-    if outD, e := structer.Generator().Generate(strings.NewReader(string(contents)), structName, packageName); e == nil {
+    if outD, e := structer.Generator().Generate(contents, structName, packageName); e == nil {
         err := structer.File(outD, fileName, out)
         structer.Check(err)
     } else {
@@ -82,7 +80,7 @@ func makeFile(contents, fileName, packageName string) {
 }
 
 // readFile prepares file contents for processing.
-func readFile(file string) (string, string, error) {
+func readFile(file string) (string, []byte, error) {
     contents, err := ioutil.ReadFile(file)
     structer.Check(err)
 
@@ -91,12 +89,17 @@ func readFile(file string) (string, string, error) {
     fileName := fileParts[0]
 
     if format != "json" {
-        // convert contents from {format} to json
-        // contents = YamlToJson(contents)
-        // contents = XmlToJson(contents)
+        // Get decoder factory if format is valid.
+        factory := structer.NewDecoderFactory()
+        decoder, err := factory.Create(format)
+        structer.Check(err)
+
+        // Decode {format} to json
+        contents, err = decoder.Decode(string(contents))
+        structer.Check(err)
     }
 
-    return fileName, string(contents), nil
+    return fileName, contents, nil
 }
 
 // init ...
