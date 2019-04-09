@@ -8,20 +8,18 @@ package structer
 
 import (
     "encoding/json"
-    "fmt"
 
-    "gopkg.in/yaml.v2"
+    "github.com/hashicorp/hcl"
 )
 
-// YamlToJsonEncoder
-type YamlToJsonDecoder struct {
+// HclToJsonDecoder
+type HclToJsonDecoder struct {
 }
 
-// Decode decodes input from YAML to JSON.
-func (e YamlToJsonDecoder) Decode(input string) ([]byte, error) {
+// Decode decodes input from HCL to JSON.
+func (e HclToJsonDecoder) Decode(input string) ([]byte, error) {
     var body interface{}
-    if err := yaml.Unmarshal([]byte(input), &body); err != nil {
-        fmt.Printf("xxxx")
+    if err := hcl.Unmarshal([]byte(input), &body); err != nil {
         panic(err)
     }
 

@@ -23,7 +23,7 @@
 
 
 <p align="center">
-	<img src="https://s3.eu-central-1.amazonaws.com/terrarium-pro/terrarium-logo-tmp.png" width="230">
+	<img src="https://s3.eu-central-1.amazonaws.com/structer/structer.gif" width="600">
 </p>
 
 # Overview

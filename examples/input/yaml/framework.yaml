@@ -1,0 +1,28 @@
+framework:
+    secret: '%env(APP_SECRET)%'
+
+    templating:
+        engines: ['twig']
+
+    php_errors:
+        log: true
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: App\Entity\User
+    from_email:
+        address: '%env(MAILER_USER_ADDRESS)%'
+        sender_name: '%env(MAILER_USER_NAME)%'
+    registration:
+        form:
+            type: App\Form\RegistrationType
+        confirmation:
+            enabled: false
+    profile:
+        form:
+            type: App\Form\ProfileType
+
+ambta_doctrine_encrypt:
+    encryptor_class: Halite
+    secret_directory_path: '%kernel.project_dir%/var/keys'

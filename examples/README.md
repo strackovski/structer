@@ -55,7 +55,7 @@ The examples below cover common use cases:
 
 ## 1. Basic example
 
-With a [~/user.json](input/user.json) file containing a json definition for the `user` type:
+With a [~/user.json](input/json/user.json) file containing a json definition for the `user` type:
 
 ```json
 {

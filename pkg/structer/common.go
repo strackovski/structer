@@ -9,7 +9,6 @@ package structer
 // initialisms is a set of common initialisms.
 //
 // Only add entries that are highly unlikely to be non-initialisms.
-// For instance, "ID" is fine (Freudian code is rare), but "AND" is not.
 //
 // Initialism: A term formed from the initial letter or letters of several
 // words or parts of words, but which is itself pronounced letter by letter.

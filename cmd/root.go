@@ -20,12 +20,30 @@ var cfgFile string
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
     Use:   "structer",
-    Short: "Convert JSON to struct.",
-    Long:  `Structer is a tool for creating struct types from definitions stored as JSON.`,
+    Short: "Makes structs from input file(s)",
+    Long: `STRUCTER - Struct code generator for Go
+
+Structer is a tool for generating struct types that implement 
+the underlying data structure discovered in the input contents 
+(the --in flag). Invoke the 'make' command to use structer:
+
+    structer make --in <PATH>
+
+Input required is the path (absolute or relative) to the input 
+file(s) or directory (of files), and is specified with the --i 
+flag. Supported input formats (flag --format) are:
+
+    - JSON (default) 
+    - YAML
+    - HCL (Hashicorp Configuration Language)
+
+Default output is a directory called "generated", created in the
+current working directory, and can be overridden by setting the 
+--out flag to user defined value.'
+`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main().
 func Execute() {
     if err := rootCmd.Execute(); err != nil {
         fmt.Println(err)
@@ -35,14 +53,9 @@ func Execute() {
 
 func init() {
     cobra.OnInitialize(initConfig)
-
-    // Defines flags and configuration settings.
-    // Supports persistent flags (global to the application) and local flags.
     rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.structer.yaml)")
-    rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-// initConfig reads in config file and ENV variables if set.
 func initConfig() {
     if cfgFile != "" {
         viper.SetConfigFile(cfgFile)

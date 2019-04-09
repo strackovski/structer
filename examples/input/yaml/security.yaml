@@ -1,0 +1,57 @@
+security:
+    role_hierarchy:
+        ROLE_APP_ADMIN:   [ROLE_USER, ROLE_API]
+
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
+
+        refresh_token_user_provider:
+            id: security.refresh_token_user_provider
+
+        jwt_db:
+            id: security.jwt_user_provider
+
+        jwt:
+            lexik_jwt: ~
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        api_login:
+            pattern:  ^/api/login$
+            stateless: true
+            provider: jwt_db
+            gfreeau_get_jwt:
+                username_parameter: username
+                password_parameter: password
+
+        api_refresh_token:
+            pattern: ^/api/refresh_token$
+            stateless: true
+            provider: refresh_token_user_provider
+            simple_preauth:
+                authenticator: security.refresh_token_authenticator
+
+        api:
+            pattern: ^/api
+            stateless: true
+            provider: jwt
+            guard:
+              authenticators:
+                  - lexik_jwt_authentication.jwt_token_authenticator
+
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+                always_use_default_target_path: true
+                default_target_path:            /admin
+            logout:       true
+            anonymous:    true
